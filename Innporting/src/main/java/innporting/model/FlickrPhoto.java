@@ -1,6 +1,7 @@
 package innporting.model;
 
 import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -15,9 +16,6 @@ public class FlickrPhoto {
 	
 	@JsonProperty("description")
 	private ContentWrapper description;
-	
-	@JsonProperty("owner")
-	private Owner owner;
 	
 	@JsonProperty("tags")
 	private TagsContainer tags;
@@ -50,7 +48,10 @@ public class FlickrPhoto {
 		}
 
 		public String getAuthor() {
-			return owner != null ? owner.getUsername() : null;
+		    if (tags != null && tags.getTag() != null && !tags.getTag().isEmpty()) {
+		        return tags.getTag().get(0).getAuthorname();
+		    }
+		    return null;
 		}
 
 		public List<String> getTags() {
@@ -85,19 +86,6 @@ public class FlickrPhoto {
 				this.content = content;
 			}
 		}
-		//Sacamos el username que es el author.
-		@JsonIgnoreProperties(ignoreUnknown = true)
-		public static class Owner {
-			@JsonProperty("username")
-			private String username;
-
-			public String getUsername() {
-				return username;
-			}
-			public void setUsername(String username) {
-				this.username = username;
-			}
-		}
 
 		@JsonIgnoreProperties(ignoreUnknown = true)
 		public static class TagsContainer {
@@ -119,6 +107,9 @@ public class FlickrPhoto {
 
 			@JsonProperty("_content")
 			private String content;
+			
+			@JsonProperty("authorname")
+			private String authorname;
 
 			public String getRaw() {
 				return raw;
@@ -131,6 +122,13 @@ public class FlickrPhoto {
 			}
 			public void setContent(String content) {
 				this.content = content;
+			}
+			
+			public String getAuthorname() {
+				return content;
+			}
+			public void setAuthorname(String authorname) {
+				this.authorname = authorname;
 			}
 		}
 		
