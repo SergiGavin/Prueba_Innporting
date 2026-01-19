@@ -20,8 +20,18 @@ public class FlickrPhoto {
 	@JsonProperty("tags")
 	private TagsContainer tags;
 	
-	@JsonProperty("urls")
-	private UrlContainer url;
+//	@JsonProperty("urls")
+//	private UrlContainer url;
+	
+	
+	
+	//Para la foto se necesita server/id+_+secret y no la URL
+	@JsonProperty("server")
+	private String server;
+	
+	@JsonProperty("secret")
+	private String secret;
+	
 	
 
 	
@@ -53,7 +63,22 @@ public class FlickrPhoto {
 		    }
 		    return null;
 		}
+		
+		public String getServer() {
+			return server;
+		}
+		public void setServer(String server) {
+			this.server = server;
+		}
+		public String getSecret() {
+			return secret;
+		}
+		
 
+		
+		public void setSecret(String secret) {
+			this.secret = secret;
+		}
 		public List<String> getTags() {
 			if (tags != null && tags.getTag() != null) {
 				return tags.getTag().stream()
@@ -62,14 +87,14 @@ public class FlickrPhoto {
 			}
 			return null;
 		}
-		public List<String> getUrl() {
-			if (url != null && url.getUrl() != null) {
-				return url.getUrl().stream()
-						.map(Url::getContentUrl)
-						.toList();
-			}
-			return null;
-		}
+//		public List<String> getUrl() {
+//			if (url != null && url.getUrl() != null) {
+//				return url.getUrl().stream()
+//						.map(Url::getContentUrl)
+//						.toList();
+//			}
+//			return null;
+//		}
 	
 	
 	

@@ -1,0 +1,17 @@
+<div *ngIf="loading" class="loading_container">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Cargando...</span>
+    </div>
+    <p>Cargando fotos...</p>
+</div>
+
+<div *ngIf="!loading" class="container mt-3">
+    <div class="row">
+        <div *ngFor="let photo of photos.photo" class="col-12 col-md-6">
+            <div class="photo_container">
+                <button class="delete_btn" (click)="removePhoto(photos.photo.indexOf(photo))">🗑️</button>
+                <img [src]="photo.url" alt="Foto" class="photo_item">
+            </div>
+        </div>
+    </div>
+</div>

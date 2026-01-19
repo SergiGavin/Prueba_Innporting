@@ -2,6 +2,7 @@ package innporting.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import innporting.model.FlickrPhoto;
 import innporting.model.FlickrPhotoList;
 import innporting.service.FlickrService;
+
+@CrossOrigin(origins = "http://localhost:4200")
 
 @RestController
 public class Controller {
@@ -43,7 +46,7 @@ public class Controller {
 		FlickrPhotoList photoList = flickrService.searchPhotoByQuery(query, page, size);
 		
 		if(photoList != null) {
-			
+			System.out.println("QUERY: "+query);
 			return new ResponseEntity<>(photoList, HttpStatus.OK);
 			
 		}else {

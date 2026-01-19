@@ -1,0 +1,56 @@
+<div class="app_container">
+  <header>
+    <div class="buscador_container">
+      <input type="text" class="buscador" placeholder="Buscar fotos..." 
+      (input)="getInputSearch($event)" 
+      (keydown.enter)="search()" #searchInput
+      >
+      <select class="size_selector" #sizeSelect>
+        <option value="10">10</option>
+        <option value="30">30</option>
+        <option value="50">50</option>
+      </select>
+      <button class="search_btn" (click)="search(sizeSelect.value)" #searchInput>Buscar</button>
+    </div>
+  </header>
+
+
+  <div class="main_content">
+    <ng-container *ngIf="hasSearched; else showLogo">
+      <router-outlet></router-outlet> 
+    </ng-container>
+
+  <ng-template #showLogo>
+      <div class="no_photos_container">
+        <img src="assets/media/logo2.png" alt="logo" class="img_logo">
+      </div>
+    </ng-template>
+  </div>
+
+  <footer class="pagination_footer">
+    <!-- Si estamos en la pagina 1 o no se ha buscado nada estará desactivado -->
+    <button
+      class="page_btn"
+      (click)="prevPage()"
+      [disabled]="page === 1 || !hasSearched" 
+    >
+      ⬅ Anterior
+    </button>
+
+    <span class="page_number">
+      {{ page }}
+    </span>
+
+    <button
+      class="page_btn"
+      (click)="nextPage()"
+      [disabled]="hasSearched === false"
+    >
+      Siguiente ➡
+    </button>
+  </footer>
+</div>
+
+
+
+

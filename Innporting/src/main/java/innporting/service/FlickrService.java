@@ -87,9 +87,16 @@ public class FlickrService {
 
 	            FlickrPhotoSearch result = new FlickrPhotoSearch();
 	            result.setId(photos.getId());
-	            List<String> urls = photo.getUrl(); // obtenemos la lista
-	            //Agarramos el primer elemento de la lista.	            
-	            result.setUrl(urls != null && !urls.isEmpty() ? urls.get(0) : null); 
+	           
+	            if (photo != null) {
+	                //Hay que montar la URL de la foto(antes utilizaba la URL pero era de flickr no de la foto estilo jpg)
+	                String imageUrl = "https://live.staticflickr.com/"
+	                                  + photo.getServer() + "/"
+	                                  + photo.getId() + "_"
+	                                  + photo.getSecret() + ".jpg";
+	                result.setUrl(imageUrl); 
+	            }
+	            
 
 	            photoList.add(result);
 	        }
