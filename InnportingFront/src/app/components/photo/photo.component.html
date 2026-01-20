@@ -7,7 +7,7 @@
 
 <div *ngIf="!loading" class="container mt-3">
     <div class="row">
-        <div *ngFor="let photo of photos.photo" class="col-12 col-md-6">
+        <div *ngFor="let photo of photos.photo" class="col-12 col-md-6" (click)="openPhotoDetails(photo)">
             <div class="photo_container">
                 <button class="delete_btn" (click)="removePhoto(photos.photo.indexOf(photo))">🗑️</button>
                 <img [src]="photo.url" alt="Foto" class="photo_item">

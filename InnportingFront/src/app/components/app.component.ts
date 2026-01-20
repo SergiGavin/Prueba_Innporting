@@ -2,8 +2,9 @@ import { Component, NgModule, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SearchService } from '../services/search.service';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -17,9 +18,23 @@ export class AppComponent {
   searchQuery: string = '';
   size: number = 10;
   page: number = 1;
-  hasSearched = false;
+  hasSearched: boolean = false;
+  isDetail: boolean = false;
   
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+
+    // Detectamos cambios de ruta para saber si estamos en detalle o no para el btn de atrás
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: any) => {
+        const url = event.url.split('?')[0]; // Obtener la URL sin los parámetros de consulta
+        if(url.startsWith('/photo')) {
+          this.isDetail = true;
+        } else {
+          this.isDetail = false; 
+        }
+      });
+  }
   
   // Obtener el valor del input de búsqueda
   getInputSearch(event: Event): void {
@@ -46,6 +61,15 @@ export class AppComponent {
       this.search();
     }
   }
+  goBack(): void {
+    this.router.navigate(['/search'], {
+      queryParams: {
+        query: this.searchQuery,
+        page: this.page,
+        size: this.size
+      }
+    });
+  }
 
   /*
   En vez de hacer que el size se guarde al cambiar el valor del select
@@ -66,6 +90,7 @@ export class AppComponent {
       return;
     }
     this.hasSearched = true;
+    this.isDetail = false;
     this.router.navigate(['/search'], {
       queryParams: {
         query: this.searchQuery,

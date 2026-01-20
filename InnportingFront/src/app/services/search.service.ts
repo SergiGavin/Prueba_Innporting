@@ -20,4 +20,8 @@ export class SearchService {
 
     return this.http.get<PhotoList>(this.api_url_search, { params });
   }
+
+  getPhotoById(id: string): Observable<any> {
+    return this.http.get<any>(`http://localhost:8080/api/images/${id}`);
+  }
 }

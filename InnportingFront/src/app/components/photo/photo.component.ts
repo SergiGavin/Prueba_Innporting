@@ -2,6 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SearchService } from '../../services/search.service';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -16,11 +17,18 @@ export class PhotoComponent implements OnInit {
   photos: any = { photo: [] };
   loading: boolean = false;
 
-  constructor(private route: ActivatedRoute, private searchService: SearchService) {}
+  constructor(private route: ActivatedRoute,
+    private searchService: SearchService,
+    private router: Router
+  ) {}
 
   //Eliminamos la foto del array
   removePhoto(index: number): void {
     this.photos.photo.splice(index, 1);
+  }
+  openPhotoDetails(photo: any): void {
+    console.log('ID:', photo.id);
+    this.router.navigate(['photoDetail/', photo.id]);
   }
 
   ngOnInit(): void {
